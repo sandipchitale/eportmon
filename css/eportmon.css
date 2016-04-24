@@ -1,0 +1,14 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  color: #333;
+  background-color: white;
+}
+
+.wait {
+  cursor: wait;
+}

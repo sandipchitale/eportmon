@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="EportmonApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>Portmon</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/eportmon.css" rel="stylesheet">
+  </head>
+  <body ng-controller="EportmonCtrl as vm">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="row">
+          <div class="navbar-header col-xs-6">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Portmon</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse col-xs-6 pull-right">
+            <ul class="nav navbar-nav">
+              <li><a href="#"><i class="glyphicon glyphicon-home"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      <div>
+    </nav>
+    <br/>
+    <div class="container" ng-class="{'wait': vm.wait}">
+      <div class="row">
+        <button class="btn btn-default pull-right" ng-click="vm.netstat()"><i class="glyphicon glyphicon-refresh"></i></button>
+      </div>
+      <br/>
+      <div class="row">
+        <table class="table">
+          <tr>
+            <th class="col-xs-1">Protocol</th>
+            <th class="col-xs-1 test-right">Local</th>
+            <th class="col-xs-8">Status</th>
+            <th class="col-xs-2 text-right">PID</th>
+          </tr>
+          <tr ng-repeat="portLine in vm.ports | filter:vm.filterPorts | orderBy:vm.orderByPorts track by $index">
+            <td>{{portLine[0]}}</td>
+            <td class="text-right">{{portLine[1]}}</td>
+            <td>{{portLine[2]}}</td>
+            <td class="text-right">{{portLine[3]}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text pull-right">&copy; Portmon &middot; Sandip Chitale</p>
+      </div>
+    </nav>
+
+    <script>
+      window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');
+    </script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="js/eportmon.js"></script>
+  </body>
+</html>
