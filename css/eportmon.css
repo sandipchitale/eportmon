@@ -27,5 +27,5 @@ body {
 
 .no-drag {
   -webkit-app-region: no-drag;
-  cursor: default;
+  cursor: pointer;
 }

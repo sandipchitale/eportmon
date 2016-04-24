@@ -1,5 +1,6 @@
 (function(){
   const spawn = require('child_process').spawn;
+  const remote = require('remote');
 
   angular
   .module('EportmonApp', [])
@@ -8,7 +9,7 @@
     vm.wait = false;
 
     vm.listeningOnly = true;
-    vm.onlyPorts = '';
+    vm.onlyPorts = '8765';
     vm.onlyPortsArray = [];
     vm.ports = [];
     vm.filterPorts = function(portLine) {
@@ -26,7 +27,20 @@
       }
       if (angular.isNumber(PID)) {
         if ($window.confirm('Kill process: ' + PID)) {
-          $log.erro('Killing')
+          $log.info('Killing process: ' + PID);
+          const kp = spawn('taskkill', ['/F', '/PID', '' + PID]);
+          kp.stdout.on('data', function(output) {
+            $log.debug(String.fromCharCode.apply(null, output));
+          });
+
+          kp.stderr.on('data', (err) => {
+            $log.debug(err);
+          });
+
+          kp.on('close', (code) => {
+            $log.debug('Exit code: ' + code);
+            netstat();
+          });
         }
       }
     }
@@ -74,6 +88,11 @@
       });
     }
     vm.netstat = netstat;
+
+    vm.quit = function() {
+      remote.getCurrentWindow().close();
+    };
+
     netstat();
   }]);
 })();
