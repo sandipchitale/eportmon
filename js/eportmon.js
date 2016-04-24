@@ -1,4 +1,5 @@
 (function(){
+  const process = require('process');
   const spawn = require('child_process').spawn;
   const remote = require('remote');
 
@@ -28,7 +29,8 @@
       if (angular.isNumber(PID)) {
         if ($window.confirm('Kill process: ' + PID)) {
           $log.info('Killing process: ' + PID);
-          const kp = spawn('taskkill', ['/F', '/PID', '' + PID]);
+          const kp = (process.platform === 'win32') ?
+            spawn('taskkill', ['/F', '/PID', '' + PID]) : spawn('kill', ['-9', '' + PID]);
           kp.stdout.on('data', function(output) {
             $log.debug(String.fromCharCode.apply(null, output));
           });
@@ -56,7 +58,8 @@
       vm.wait = true;
       vm.ports = [];
 
-      const ns = spawn('netstat', ['-anop', 'tcp']);
+      const ns = (process.platform === 'win32') ?
+              spawn('netstat', ['-anop', 'tcp']) : spawn('netstat', ['-anp', '--tcp']);
       ns.stdout.on('data', function(pls) {
         portLines += String.fromCharCode.apply(null, pls).substring(1);
       });
