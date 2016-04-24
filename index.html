@@ -7,8 +7,8 @@
     <link href="css/eportmon.css" rel="stylesheet">
   </head>
   <body ng-controller="EportmonCtrl as vm">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" title="Drag to move the window">
+      <div class="container movable drag">
         <div class="row">
           <div class="navbar-header col-xs-6">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -17,11 +17,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Portmon</a>
+            <span class="navbar-brand no-drag">Portmon</span>
           </div>
           <div id="navbar" class="navbar-collapse collapse col-xs-6 pull-right">
             <ul class="nav navbar-nav">
-              <li><a href="https://github.com/sandipchitale/eportmon/" target="blank" title="Github"><img src="images/github.png"></img></a></li>
+              <li class="no-drag"><a href="https://github.com/sandipchitale/eportmon/" target="blank" title="Github"><img src="images/github.png"></img></a></li>
             </ul>
           </div>
         </div>
