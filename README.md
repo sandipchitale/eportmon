@@ -10,3 +10,11 @@ cd eportmon
 npm install
 npm start
 ```
+
+## To build executable
+
+```
+npm install electron-packager -g
+
+electron-packager . eportmon --platform=win32 --arch=all -icon=ico\eportmon.ico
+```

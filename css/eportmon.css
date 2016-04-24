@@ -1,4 +1,4 @@
-html, body {
+html,body {
   height: 100%;
 }
 
@@ -7,6 +7,24 @@ body {
   padding-bottom: 50px;
   color: #333;
   background-color: white;
+  overflow: scroll;
+}
+
+.wrapper {
+  display: flex;
+    flex-direction: column;
+
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+
+    height: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
 }
 
 .wait {
