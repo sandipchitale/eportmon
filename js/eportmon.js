@@ -9,7 +9,7 @@
     vm.wait = false;
 
     vm.listeningOnly = true;
-    vm.onlyPorts = '8765';
+    vm.onlyPorts = '';
     vm.onlyPortsArray = [];
     vm.ports = [];
     vm.filterPorts = function(portLine) {
