@@ -11,8 +11,12 @@ const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
 
 function createWindow () {
+  app.setName('Portmon');
+
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
+
+  mainWindow.setTitle('Portmon');
 
   mainWindow.setMenuBarVisibility(false);
 

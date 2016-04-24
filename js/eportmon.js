@@ -3,20 +3,41 @@
 
   angular
   .module('EportmonApp', [])
-  .controller('EportmonCtrl', ['$scope', '$log', function($scope){
+  .controller('EportmonCtrl', ['$scope', '$window', '$log', function($scope, $window, $log){
     var vm = this;
     vm.wait = false;
+
+    vm.listeningOnly = true;
+    vm.onlyPorts = '';
+    vm.onlyPortsArray = [];
     vm.ports = [];
     vm.filterPorts = function(portLine) {
-      return portLine[2] === 'LISTENING';
+      return (!vm.listeningOnly || portLine[2] === 'LISTENING') &&
+             (vm.onlyPortsArray.length === 0 || vm.onlyPortsArray.indexOf(portLine[1]) !== -1);
     }
 
     vm.orderByPorts = function(portLine) {
       return parseInt(portLine[1]);
     }
 
+    vm.killProcess = function(PID) {
+      if (angular.isString(PID)) {
+        PID = parseInt(PID);
+      }
+      if (angular.isNumber(PID)) {
+        if ($window.confirm('Kill process: ' + PID)) {
+          $log.erro('Killing')
+        }
+      }
+    }
+
     function netstat() {
       var portLines = '';
+
+      vm.onlyPortsArray = vm.onlyPorts.split(/,/);
+      if (vm.onlyPortsArray.length > 0 && vm.onlyPortsArray[0] === '') {
+        vm.onlyPortsArray.splice(0,1);
+      }
 
       vm.wait = true;
       vm.ports = [];

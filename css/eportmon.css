@@ -12,3 +12,8 @@ body {
 .wait {
   cursor: wait;
 }
+
+
+.monospace {
+  font-family: 'Courier New', 'monospace';
+}
