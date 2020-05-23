@@ -1,5 +1,6 @@
 html,body {
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 body {
@@ -7,19 +8,23 @@ body {
   padding-bottom: 50px;
   color: #333;
   background-color: white;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .wrapper {
+  padding-top: 10px;
+
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
 
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: stretch;
-    align-content: stretch;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
 
-    height: 100%;
+  height: calc(100vh - 100px);
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 
 .content {

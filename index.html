@@ -6,45 +6,49 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/eportmon.css" rel="stylesheet">
   </head>
-  <body ng-controller="EportmonCtrl as vm">
+  <body ng-controller="EportmonCtrl as vm"  ng-class="{'wait': vm.wait}">
     <nav class="navbar navbar-inverse navbar-fixed-top" title="Drag to move the window">
-      <div class="container movable drag">
-        <div class="row">
-          <div class="navbar-header col-xs-6">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand no-drag">Portmon</span>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse col-xs-6 pull-right">
-            <ul class="nav navbar-nav">
-              <li class="no-drag"><a href="https://github.com/sandipchitale/eportmon/" target="blank" title="Github"><img src="images/github.png"></img></a></li>
-              <li class="no-drag"><button class="btn btn-link navbar-btn" ng-click="vm.quit()"><i class="glyphicon glyphicon-remove-circle"></i></button></li>
-            </ul>
-          </div>
+      <div class="container-fluid movable drag">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-brand no-drag"><nobr><img src="images/eportmon.png" width="16" > Portmon</nobr></div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse pull-right">
+          <ul class="nav navbar-nav">
+            <li class="no-drag"><a href="https://github.com/sandipchitale/eportmon/" target="blank" title="Github"><img src="images/github.png"></img></a></li>
+            <li class="no-drag"><button class="btn btn-link navbar-btn" ng-click="vm.quit()"><i class="glyphicon glyphicon-remove-circle"></i></button></li>
+          </ul>
         </div>
       <div>
     </nav>
-    <br/>
     <div class="wrapper">
-        <div class="container" ng-class="{'wait': vm.wait}">
+        <div class="container">
           <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-7">
               <form class="form-inline">
                 <div class="form-group">
                   <label for="ports">Ports:</label>
-                  <input type="text" class="form-control" ng-model="vm.onlyPorts" size="50" id="ports" placeholder="Enter comma separated set of ports">
+                  <input type="text" class="form-control" ng-model="vm.onlyPorts" ng-change="vm.portsChanged()" size="40" id="ports" placeholder="Enter comma separated set of ports">
                 </div>
               <form>
             </div>
-            <div class="col-xs-1 text-center">
-              <button class="btn btn-sm btn-success" ng-click="vm.netstat()"><i class="glyphicon glyphicon-refresh"></i></button>
+            <div class="col-xs-2 text-center">
+              <button type="button" class="btn btn-sm btn-default no-drag"
+                ng-click="vm.toggleMonitoring()"
+                title="{{vm.monitor ? 'Pause monitoring' : 'Resume monitoring'}}">
+                <i
+                  class="glyphicon"
+                  ng-class="{'glyphicon-play': !vm.monitor, 'glyphicon-pause': vm.monitor}"></i>
+              </button>
+              <button class="btn btn-sm btn-success" ng-click="vm.doNetstat()"><i class="glyphicon glyphicon-refresh"></i></button>
             </div>
             <div class="col-xs-3">
-              <div class="checkbox pull-right">
+              <div class="form-group pull-right">
                 <label>
                   <input type="checkbox" ng-model="vm.listeningOnly"> <strong>LISTENING</strong> only
                 </label>
@@ -64,7 +68,7 @@
                   <th class="col-xs-2 text-right">Local</th>
                   <th class="col-xs-1">&nbsp;</th>
                   <th class="col-xs-6">Status</th>
-                  <th class="col-xs-2 text-right">PID</th>
+                  <th class="col-xs-2 text-center">PID</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,7 +78,8 @@
                   <td>&nbsp;</td>
                   <td>{{portLine[2]}}</td>
                   <td class="text-right">
-                    <strong>{{portLine[3]}}</strong> <button class="btn btn-sm btn-danger" ng-click="vm.killProcess(portLine[3])"><i class="glyphicon glyphicon-remove"></i></button>
+                    <strong>{{portLine[3]}}</strong>
+                    <button class="btn btn-sm btn-danger" ng-click="vm.killProcess(portLine[3])"><i class="glyphicon glyphicon-remove"></i></button>
                   </td>
                 </tr>
               <tbody>

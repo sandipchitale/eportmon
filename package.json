@@ -1,10 +1,11 @@
 {
   "name": "portmon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A desktop portmon",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "package:win": "electron-packager . \"eportmon\" --quiet --overwrite --out=dist/win --platform=win32 --arch=ia32,x64 --icon=ico/eportmon.ico --version-string.CompanyName=\"Sandip Chitale\" --version-string.ProductName=\"Portmon\" --version-string.FileDescription=\"eportmon\""
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "electron-prebuilt": "^0.37.0"
   },
   "dependencies": {
+    "fs-extra": "^1.0.0",
+    "path-extra": "^3.0.0",
     "angular": "^1.5.5",
     "bootstrap": "^3.3.6",
     "jquery": "^2.2.3"

@@ -1,3 +1,4 @@
 node_modules
 eportmon-win32-ia32
 eportmon-win32-x64
+dist/
