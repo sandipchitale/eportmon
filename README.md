@@ -20,5 +20,5 @@ npm start
 ```
 npm install electron-packager -g
 
-electron-packager . eportmon --platform=win32 --arch=all -icon=ico\eportmon.ico
+npm run package:win
 ```

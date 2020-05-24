@@ -79,7 +79,7 @@
                   <td>{{portLine[2]}}</td>
                   <td class="text-right">
                     <strong>{{portLine[3]}}</strong>
-                    <button class="btn btn-sm btn-danger" ng-click="vm.killProcess(portLine[3])"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button class="btn btn-sm btn-danger" ng-click="vm.killProcess($event, portLine[3])"><i class="glyphicon glyphicon-remove"></i></button>
                   </td>
                 </tr>
               <tbody>

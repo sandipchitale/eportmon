@@ -96,28 +96,29 @@
       return parseInt(portLine[1]);
     }
 
-    vm.killProcess = function(PID) {
+    vm.killProcess = function(event, PID) {
       if (angular.isString(PID)) {
         PID = parseInt(PID);
       }
       if (angular.isNumber(PID)) {
-        if ($window.confirm('Kill process: ' + PID)) {
-          $log.info('Killing process: ' + PID);
-          const kp = (process.platform === 'win32') ?
-            spawn('taskkill', ['/F', '/PID', '' + PID]) : spawn('kill', ['-9', '' + PID]);
-          kp.stdout.on('data', function(output) {
-            $log.debug(String.fromCharCode.apply(null, output));
-          });
-
-          kp.stderr.on('data', (err) => {
-            $log.debug(err);
-          });
-
-          kp.on('close', (code) => {
-            $log.debug('Exit code: ' + code);
-            vm.netstat();
-          });
+        if (!event.ctrlKey && !$window.confirm('Kill process: ' + PID)) {
+          return;
         }
+        $log.info('Killing process: ' + PID);
+        const kp = (process.platform === 'win32') ?
+          spawn('taskkill', ['/F', '/PID', '' + PID]) : spawn('kill', ['-9', '' + PID]);
+        kp.stdout.on('data', function(output) {
+          $log.debug(String.fromCharCode.apply(null, output));
+        });
+
+        kp.stderr.on('data', (err) => {
+          $log.debug(err);
+        });
+
+        kp.on('close', (code) => {
+          $log.debug('Exit code: ' + code);
+          vm.netstat();
+        });
       }
     }
 
