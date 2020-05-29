@@ -14,7 +14,7 @@ function createWindow () {
   app.setName('Portmon');
 
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600, icon: __dirname + '/images/eportmon.png', frame: false, center: true});
+  mainWindow = new BrowserWindow({width: 800, height: 500, icon: __dirname + '/images/eportmon.png', frame: false, center: true});
 
   mainWindow.setMenuBarVisibility(false);
 

@@ -5,6 +5,7 @@
   const path = require('path');
   const pathExtra = require('path-extra');
   const fileSystem = require('fs');
+  const shell = require('electron').shell
 
   angular
   .module('EportmonApp', [])
@@ -122,7 +123,6 @@
       }
     }
 
-
     vm.doNetstat =function () {
       var portLines = '';
 
@@ -180,6 +180,10 @@
       if (vm.monitor) {
         vm.doNetstat();
       }
+    }
+
+    vm.github = function () {
+      shell.openExternal('https://github.com/sandipchitale/eportmon/');
     }
 
     vm.quit = function() {
