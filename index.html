@@ -34,7 +34,7 @@
     <div class="wrapper">
         <div class="container-fluid">
           <div class="d-flex flex-row align-items-center">
-            <span class="mr-2">Ports:</span>
+            <span class="mr-2 flex-shrink-0">Monitor ports:</span>
             <input type="search" class="form-control mx-auto" ng-model="vm.onlyPorts" ng-change="vm.portsChanged()" size="40" id="ports" placeholder="Enter comma separated set of ports">
             <button type="button" class="btn btn-sm ml-3 mr-2 no-drag"
               ng-class="{'btn-danger': vm.monitor, 'btn-success': !vm.monitor}"
@@ -51,7 +51,7 @@
           </div>
           <br/>
           <div class="d-flex flex-row">
-            <em>Count: {{(vm.ports | filter:vm.filterPorts).length}} </em>
+            <em *ngIf="vm.wait">Count: {{(vm.ports | filter:vm.filterPorts).length}} </em>
           </div>
           <br/>
           <div class="row content">
@@ -62,7 +62,8 @@
                   <th class="col-xs-2 text-right">Local</th>
                   <th class="col-xs-1">&nbsp;</th>
                   <th class="col-xs-6">Status</th>
-                  <th class="col-xs-2 text-center">PID</th>
+                  <th class="col-xs-1 text-right">PID</th>
+                  <th class="col-xs-1 text-center">&nbsp;</th>
                 </tr>
               </thead>
               <tbody>
@@ -73,6 +74,8 @@
                   <td>{{portLine[2]}}</td>
                   <td class="text-right">
                     <strong>{{portLine[3]}}</strong>
+                  </td>
+                  <td class="text-center">
                     <button class="btn btn-sm btn-danger" ng-click="vm.killProcess($event, portLine[3])"><i class="fa fa-remove"></i></button>
                   </td>
                 </tr>

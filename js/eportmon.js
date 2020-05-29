@@ -132,7 +132,7 @@
       }
 
       vm.wait = true;
-      vm.ports = [];
+      //vm.ports = [];
 
       const ns = (process.platform === 'win32') ?
               spawn('netstat', ['-anop', 'tcp']) : spawn('netstat', ['-anp', '--tcp']);
