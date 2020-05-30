@@ -4,7 +4,7 @@ html,body {
 }
 
 body {
-  padding-top: 54px;
+  /* padding-top: 54px; */
   padding-bottom: 50px;
   color: #333;
   background-color: white;
@@ -23,7 +23,7 @@ body {
   align-items: stretch;
   align-content: stretch;
 
-  height: calc(100vh - 104px);
+  height: calc(100vh - 105px);
   overflow-x: auto;
   overflow-y: scroll;
 }

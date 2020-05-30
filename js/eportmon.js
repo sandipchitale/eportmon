@@ -12,7 +12,7 @@
   .controller('EportmonCtrl', ['$scope', '$window', '$log', '$interval',function($scope, $window, $log, $interval){
     var vm = this;
     vm.wait = false;
-
+    vm.updatedAt = new Date();
 
     var intervalId;
     vm.monitor = true;
@@ -146,6 +146,7 @@
 
       ns.on('close', (code) => {
         vm.wait = false;
+        vm.updatedAt = new Date();
         portLines = portLines.split(/\r\n/);
         $scope.$apply(function() {
           if (angular.isArray(portLines) && portLines.length > 5) {

@@ -8,7 +8,7 @@
     <link href="css/eportmon.css" rel="stylesheet">
   </head>
   <body ng-controller="EportmonCtrl as vm"  ng-class="{'wait': vm.wait}">
-    <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top movable drag" title="Drag to move the window">
+    <!-- <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top movable drag" title="Drag to move the window">
       <a class="navbar-brand">
         <img src="images/eportmon.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
         Portmon
@@ -30,58 +30,98 @@
           </li>
         </ul>
       </div>
-    </nav>
-    <div class="wrapper">
-        <div class="container-fluid">
-          <div class="d-flex flex-row align-items-center">
-            <span class="mr-2 flex-shrink-0">Monitor ports:</span>
-            <input type="search" class="form-control mx-auto" ng-model="vm.onlyPorts" ng-change="vm.portsChanged()" size="40" id="ports" placeholder="Enter comma separated set of ports">
-            <button type="button" class="btn btn-sm ml-3 mr-2 no-drag"
+    </nav> -->
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top second-nav">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand">
+        <img src="images/eportmon.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+      </a>
+      <div class="navbar-collapse collapse" id="navbar1">
+        <ul class="navbar-nav">
+          <li class="navbar-text flex-shrink-0">
+            <span class="nav-text">Monitor ports:</span>
+          </li>
+        </ul>
+        <form class="form-inline mx-2 d-inline flex-fill">
+          <div class="input-group">
+              <input type="search" class="form-control flex-fill"
+              id="ports"
+              ng-model="vm.onlyPorts"
+              ng-change="vm.portsChanged()"
+              ng-keydown="$event.keyCode === 13 && vm.portsChanged() || vm.doNetstat()"
+              placeholder="Enter comma separated set of ports">
+          </div>
+        </form>
+        <ul class="navbar-nav ml-auto">
+          <form class="form-inline flex-shrink-0">
+            <button type="button"
+              class="btn btn-sm mx-2 no-drag"
               ng-class="{'btn-danger': vm.monitor, 'btn-success': !vm.monitor}"
               ng-click="vm.toggleMonitoring()"
               title="{{vm.monitor ? 'Pause monitoring' : 'Resume monitoring'}}">
               <i class="fa" ng-class="{'fa-play': !vm.monitor, 'fa-pause': vm.monitor}"></i>
             </button>
-            <button class="btn btn-sm btn-success mx-2" ng-click="vm.doNetstat()">
+            <button  type="button"
+              class="btn btn-sm btn-success mx-2 no-drag"
+              ng-click="vm.doNetstat()">
               <i class="fa fa-refresh"></i>
             </button>
-            <label class="ml-2 mt-2 flex-shrink-0">
-              <input type="checkbox" ng-model="vm.listeningOnly"> LISTENING only
-            </label>
-          </div>
-          <br/>
-          <div class="d-flex flex-row">
-            <em *ngIf="vm.wait">Count: {{(vm.ports | filter:vm.filterPorts).length}} </em>
-          </div>
-          <div class="row content">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="col-xs-1">Protocol</th>
-                  <th class="col-xs-2 text-right">Local</th>
-                  <th class="col-xs-1">&nbsp;</th>
-                  <th class="col-xs-6">Status</th>
-                  <th class="col-xs-1 text-right">PID</th>
-                  <th class="col-xs-1 text-center">&nbsp;</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="monospace align-items-center" ng-repeat="portLine in vm.ports | filter:vm.filterPorts | orderBy:vm.orderByPorts track by $index">
-                  <td>{{portLine[0]}}</td>
-                  <td class="text-right px-2"><strong>{{portLine[1]}}</strong></td>
-                  <td>&nbsp;</td>
-                  <td>{{portLine[2]}}</td>
-                  <td class="text-right">
-                    <strong>{{portLine[3]}}</strong>
-                  </td>
-                  <td class="text-center">
-                    <button class="btn btn-sm btn-danger" ng-click="vm.killProcess($event, portLine[3])"><i class="fa fa-power-off"></i></button>
-                  </td>
-                </tr>
-              <tbody>
-            </table>
-          </div>
+            <input class="form-control mx-2" type="checkbox" ng-model="vm.listeningOnly">
+          </form>
+          <li class="navbar-text flex-shrink-0">
+            <span class="nav-text">LISTENING Only</span>
+          </li>
+          <li class="nav-item no-drag flex-shrink-0">
+            <button class="nav-link btn btn-sm" ng-click="vm.github()" target="blank" title="Github">
+              <i class="fa fa-github"></i>
+            </button>
+          </li>
+          <li class="nav-item no-drag flex-shrink-0">
+            <a class="nav-link" ng-click="vm.quit()">
+              <i class="fa fa-times"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="wrapper">
+      <div class="container-fluid">
+        <div class="d-flex flex-row">
+          <span>Count: {{(vm.ports | filter:vm.filterPorts).length}} </span>
+          <span class="ml-auto">Updated at: {{ vm.updatedAt | date: 'hh:mm:ss a (MM/dd/yyyy)' }} </span>
         </div>
+        <div class="row content">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="col-xs-1">Protocol</th>
+                <th class="col-xs-2 text-right">Local</th>
+                <th class="col-xs-1">&nbsp;</th>
+                <th class="col-xs-6">Status</th>
+                <th class="col-xs-1 text-right">PID</th>
+                <th class="col-xs-1 text-center">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="monospace align-items-center" ng-repeat="portLine in vm.ports | filter:vm.filterPorts | orderBy:vm.orderByPorts track by $index">
+                <td>{{portLine[0]}}</td>
+                <td class="text-right px-2"><strong>{{portLine[1]}}</strong></td>
+                <td>&nbsp;</td>
+                <td>{{portLine[2]}}</td>
+                <td class="text-right">
+                  <strong>{{portLine[3]}}</strong>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-danger" ng-click="vm.killProcess($event, portLine[3])"><i class="fa fa-power-off"></i></button>
+                </td>
+              </tr>
+            <tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <nav class="navbar navbar-dark bg-dark navbar-fixed-bottom">
