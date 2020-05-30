@@ -7,32 +7,8 @@
     <link href="node_modules\font-awesome\css\font-awesome.css" rel="stylesheet">
     <link href="css/eportmon.css" rel="stylesheet">
   </head>
-  <body ng-controller="EportmonCtrl as vm"  ng-class="{'wait': vm.wait}">
-    <!-- <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top movable drag" title="Drag to move the window">
-      <a class="navbar-brand">
-        <img src="images/eportmon.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-        Portmon
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navLinks" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navLinks">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item no-drag">
-            <a class="nav-link" ng-click="vm.github()" target="blank" title="Github">
-              <i class="fa fa-github"></i>
-            </a>
-          </li>
-          <li class="nav-item no-drag">
-            <a class="nav-link" ng-click="vm.quit()">
-              <i class="fa fa-times"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav> -->
-
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top second-nav">
+  <body ng-controller="EportmonCtrl as vm"  ng-class="{'wait': vm.wait}" ng-cloak>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top drag movable">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -47,7 +23,7 @@
         </ul>
         <form class="form-inline mx-2 d-inline flex-fill">
           <div class="input-group">
-              <input type="search" class="form-control flex-fill"
+              <input type="search" class="form-control flex-fill no-drag"
               id="ports"
               ng-model="vm.onlyPorts"
               ng-change="vm.portsChanged()"
@@ -69,32 +45,45 @@
               ng-click="vm.doNetstat()">
               <i class="fa fa-refresh"></i>
             </button>
-            <input class="form-control mx-2" type="checkbox" ng-model="vm.listeningOnly">
+            <input class="form-control mx-2 no-drag" type="checkbox" ng-model="vm.listeningOnly">
           </form>
           <li class="navbar-text flex-shrink-0">
             <span class="nav-text">LISTENING Only</span>
           </li>
-          <li class="nav-item no-drag flex-shrink-0">
-            <button class="nav-link btn btn-sm" ng-click="vm.github()" target="blank" title="Github">
+          <li class="nav-item flex-shrink-0">
+            <button class="nav-link btn btn-sm no-drag" ng-click="vm.github()" target="blank" title="Github">
               <i class="fa fa-github"></i>
             </button>
           </li>
-          <li class="nav-item no-drag flex-shrink-0">
-            <a class="nav-link" ng-click="vm.quit()">
+          <li class="nav-item flex-shrink-0">
+            <a class="nav-link  no-drag " ng-click="vm.quit()">
               <i class="fa fa-times"></i>
             </a>
           </li>
         </ul>
       </div>
     </nav>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top drag movable">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse" id="navbar2">
+        <ul class="navbar-nav">
+          <li class="navbar-text flex-shrink-0">
+            <span>Count: {{(vm.ports | filter:vm.filterPorts).length}} </span>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="navbar-text flex-shrink-0">
+            <span class="ml-auto">Updated at: {{ vm.updatedAt | date: 'hh:mm:ss a (MM/dd/yyyy)' }} </span>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div class="wrapper">
       <div class="container-fluid">
-        <div class="d-flex flex-row">
-          <span>Count: {{(vm.ports | filter:vm.filterPorts).length}} </span>
-          <span class="ml-auto">Updated at: {{ vm.updatedAt | date: 'hh:mm:ss a (MM/dd/yyyy)' }} </span>
-        </div>
         <div class="row content">
-          <table class="table">
+          <table class="table table-sm table-striped table-hover">
             <thead>
               <tr>
                 <th class="col-xs-1">Protocol</th>
@@ -106,7 +95,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="monospace align-items-center" ng-repeat="portLine in vm.ports | filter:vm.filterPorts | orderBy:vm.orderByPorts track by $index">
+              <tr class="monospace" ng-repeat="portLine in vm.ports | filter:vm.filterPorts | orderBy:vm.orderByPorts track by $index">
                 <td>{{portLine[0]}}</td>
                 <td class="text-right px-2"><strong>{{portLine[1]}}</strong></td>
                 <td>&nbsp;</td>
@@ -124,7 +113,7 @@
       </div>
     </div>
 
-    <nav class="navbar navbar-dark bg-dark navbar-fixed-bottom">
+    <nav class="navbar navbar-dark bg-dark navbar-fixed-bottom drag movable">
         <p class="navbar-text ml-auto">&copy; Portmon &middot; Sandip Chitale</p>
     </nav>
 
