@@ -26,7 +26,7 @@
     "electron-prebuilt": "^0.37.0"
   },
   "dependencies": {
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "bootstrap": "^4.5.0",
     "font-awesome": "^4.7.0",
     "fs-extra": "^1.0.0",
